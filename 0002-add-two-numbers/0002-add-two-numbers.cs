@@ -10,29 +10,17 @@
  * }
  */
 public class Solution {
-    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
-        var dummy = new ListNode();
-        var tail = dummy;
-        int carry = 0;
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2, int carry = 0) 
+    {
+        if(l1 == null && l2 == null && carry == 0) return null;
 
-        while (l1 != null || l2 != null || carry > 0) {
-            int sum = carry;
+        int val1 = l1 == null ? 0 : l1.val;
+        int val2 = l2 == null ? 0 : l2.val;
 
-            if (l1 != null) {
-                sum += l1.val;
-                l1 = l1.next;
-            }
+        int result = val1 +  val2 + carry;
 
-            if (l2 != null) {
-                sum += l2.val;
-                l2 = l2.next;
-            }
+        carry = result / 10;
 
-            tail.next = new ListNode(sum % 10);
-            tail = tail.next;
-            carry = sum / 10;
-        }
-
-        return dummy.next;
+        return new ListNode (result % 10, AddTwoNumbers(l1?.next, l2?.next, carry));
     }
 }
